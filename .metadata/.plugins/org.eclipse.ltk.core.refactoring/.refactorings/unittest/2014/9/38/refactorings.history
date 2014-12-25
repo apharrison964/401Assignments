@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 4 elements from project &apos;unittest&apos;&#x0D;&#x0A;- Original project: &apos;unittest&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     unittest/src/a2adept&#x0D;&#x0A;     unittest/src/a2jedi&#x0D;&#x0A;     unittest/src/a2novice&#x0D;&#x0A;     META-INF" description="Delete elements" element1="src/META-INF" element2="/src&lt;a2novice" element3="/src&lt;a2jedi" element4="/src&lt;a2adept" elements="3" flags="589830" id="org.eclipse.jdt.ui.delete" resources="1" stamp="1411066560727" subPackages="false" version="1.0"/>
+</session>

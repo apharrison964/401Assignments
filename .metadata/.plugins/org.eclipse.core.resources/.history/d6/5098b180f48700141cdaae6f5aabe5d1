@@ -1,0 +1,23 @@
+
+public class Tt {
+	
+	static int x = 0;
+
+	public static void main(String[] args){
+		
+		for (int i = 0; i < 2; i++){
+			x = i;
+		}
+		
+		System.out.println(x);
+	
+	}
+	
+	public boolean methodIMade() {
+		
+		if(x < 3){
+			return true;
+		}
+		return false;
+	}
+}

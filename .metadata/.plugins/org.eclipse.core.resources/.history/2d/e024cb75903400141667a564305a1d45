@@ -1,0 +1,14 @@
+package a1;
+
+public class A1Jedi {
+
+	public static void main(String[] args) {
+	       Scanner s = new Scanner(System.in);
+
+	       process(s);
+	}
+
+	public static void process(Scanner s) {
+	
+	}
+}

@@ -1,0 +1,687 @@
+package a8;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.*;
+
+import comp401.sushi.*;
+import comp401.sushi.Sashimi.SashimiType;
+
+@SuppressWarnings("serial")
+public class SushiWorkstationWidget extends JPanel implements ActionListener  {
+
+	Avocado avocado;
+	Crab crab;
+	Eel eel;
+	Rice rice;
+	Salmon salmon;
+	Seaweed seaweed;
+	Shrimp shrimp;
+	Tuna tuna;
+	Roll roll;
+	JPanel topLevel;
+	JPanel gridLay;
+	JPanel sushiButtons;
+	JPanel sash;
+	JPanel nigi;
+	JSlider goldAmount;
+	JSlider avocadoSlider;
+	JSlider crabSlider;
+	JSlider eelSlider;
+	JSlider riceSlider;
+	JSlider salmonSlider;
+	JSlider shrimpSlider;
+	JSlider tunaSlider;
+	JButton makeRoll;
+	JButton sashimiButton;
+	JButton nigiriButton;
+	String[] type = {"Crab", "Eel", "Salmon", "Shrimp", "Tuna"};
+	String[] choosePlate = {"Red Plate", "Blue Plate", "Green Plate", "Gold Plate"};
+	JComboBox<String> coloredPlates;
+	JComboBox<String> sashimiType;
+	JComboBox<String> nigiriType;
+
+	/* Do not change the following line. */
+	private List<WorkstationListener> listeners;
+
+	public SushiWorkstationWidget() {
+		/* Do not change the following line*/
+		listeners = new ArrayList<WorkstationListener>();
+
+		/* Replace the following line with your own code. */
+		topLevel = new JPanel();
+		topLevel.setLayout(new BorderLayout());
+		add(topLevel);
+
+		gridLay = new JPanel();
+		gridLay.setLayout(new GridLayout(0, 2));
+
+		gridLay.add(new JLabel("Plate Color: "));
+		coloredPlates = new JComboBox<String>(choosePlate);
+		coloredPlates.setVisible(true);
+		gridLay.add(coloredPlates);
+
+		gridLay.add(new JLabel("Gold Price: "));
+		goldAmount = new JSlider(5, 15);
+		goldAmount.setMajorTickSpacing(3);
+		goldAmount.setPaintTicks(true);
+		gridLay.add(goldAmount);
+
+		gridLay.add(new JLabel("Avocado: "));
+		avocadoSlider = new JSlider(0, 100);
+		gridLay.add(avocadoSlider);
+
+		gridLay.add(new JLabel("Crab: "));
+		crabSlider = new JSlider(0, 100);
+		gridLay.add(crabSlider);
+
+		gridLay.add(new JLabel("Eel: "));
+		eelSlider = new JSlider(0, 100);
+		gridLay.add(eelSlider);
+
+		gridLay.add(new JLabel("Rice: "));
+		riceSlider = new JSlider(0, 100);
+		gridLay.add(riceSlider);
+
+		gridLay.add(new JLabel("Salmon: "));
+		salmonSlider = new JSlider(0, 100);
+		gridLay.add(salmonSlider);
+
+		gridLay.add(new JLabel("Shrimp: "));
+		shrimpSlider = new JSlider(0, 100);
+		gridLay.add(shrimpSlider);
+
+		gridLay.add(new JLabel("Tuna: "));
+		tunaSlider = new JSlider(0, 100);
+		gridLay.add(tunaSlider);
+
+		topLevel.add(gridLay, BorderLayout.NORTH);
+
+		makeRoll = new JButton("Make Roll");
+		makeRoll.setActionCommand("Make Roll");
+		topLevel.add(makeRoll);
+
+		sushiButtons = new JPanel();
+		sushiButtons.setLayout(new BorderLayout());
+		topLevel.add(sushiButtons, BorderLayout.SOUTH);
+
+		sash = new JPanel();
+		sash.setLayout(new BorderLayout());
+		sash.add(new JLabel("Sashimi Type: "), BorderLayout.WEST);
+		sushiButtons.add(sash, BorderLayout.NORTH);
+
+		sashimiType = new JComboBox<String>(type);
+		sash.add(sashimiType, BorderLayout.CENTER);
+		sashimiButton = new JButton("Make Sashimi");
+		sash.add(sashimiButton, BorderLayout.EAST);
+
+		nigi = new JPanel();
+		nigi.setLayout(new BorderLayout());
+		nigi.add(new JLabel("Nigiri Type: "), BorderLayout.WEST);
+		sushiButtons.add(nigi, BorderLayout.SOUTH);
+
+		nigiriType = new JComboBox<String>(type);
+		nigi.add(nigiriType, BorderLayout.CENTER);
+		nigiriButton = new JButton("Make Nigiri");
+		nigi.add(nigiriButton, BorderLayout.EAST);
+
+		makeRoll.addActionListener(this);
+		nigiriButton.addActionListener(this);
+		sashimiButton.addActionListener(this);
+		sashimiType.addActionListener(this);
+		coloredPlates.addActionListener(this);
+
+	}
+
+
+	/* Do not change the following three methods:
+	 * addWorkstationListener
+	 * removeWorkstationListener
+	 * publicPlateToListeners
+	 */
+
+	public void addWorkstationListener(WorkstationListener l) {
+		listeners.add(l);
+	}
+
+	public void removeWorkstationListener(WorkstationListener l) {
+		listeners.remove(l);
+	}
+
+
+	private void publishPlateToListeners(Plate p) {
+		for (WorkstationListener l : listeners) {
+			l.handleMadePlate(p);
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		ArrayList<Ingredient> ingreList = new ArrayList<Ingredient>();
+
+		if(((double) avocadoSlider.getValue() / 100.0) != 0){
+			avocado = new Avocado((double) avocadoSlider.getValue() / 100.0);	
+			ingreList.add(avocado);
+		}
+
+		if(((double) crabSlider.getValue() / 100.0) != 0){
+			crab = new Crab((double) crabSlider.getValue() / 100.0);
+			ingreList.add(crab);
+		}
+		if(((double) eelSlider.getValue() / 100.0) != 0){
+			eel = new Eel((double) eelSlider.getValue() / 100.0);
+			ingreList.add(eel);
+		}
+
+		if(((double) riceSlider.getValue() / 100.0) != 0){
+			rice = new Rice((double) riceSlider.getValue() / 100.0);
+			ingreList.add(rice);
+		}
+
+		if(((double) salmonSlider.getValue() / 100.0) != 0){
+			salmon = new Salmon((double) salmonSlider.getValue() / 100.0);
+			ingreList.add(salmon);
+		}
+
+		if(((double) shrimpSlider.getValue() / 100.0) != 0){
+			shrimp = new Shrimp((double) shrimpSlider.getValue() / 100.0);
+			ingreList.add(shrimp);
+		}
+
+		if(((double) tunaSlider.getValue() / 100.0) != 0){
+			tuna = new Tuna((double) tunaSlider.getValue() / 100.0);
+			ingreList.add(tuna);
+		}
+
+		Ingredient[] ingredient = new Ingredient[ingreList.size()];
+		ingredient = ingreList.toArray(ingredient);	
+
+		roll = new Roll(ingredient);
+
+		if(e.getSource() == makeRoll){
+
+			if(coloredPlates.getSelectedItem().toString().equals("Red Plate")){
+				try {
+					Plate plate = new RedPlate(roll);
+					publishPlateToListeners(plate);
+				} catch (PlatePriceException e1) {
+					System.out.println(e1);
+				}
+			}
+
+			if(coloredPlates.getSelectedItem().toString().equals("Green Plate")){
+				try {
+					Plate plate = new GreenPlate(roll);
+					publishPlateToListeners(plate);
+				} catch (PlatePriceException e1) {
+					System.out.println(e1);
+				}
+			}
+
+			if(coloredPlates.getSelectedItem().toString().equals("Blue Plate")){
+				try {
+					Plate plate = new BluePlate(roll);
+					publishPlateToListeners(plate);
+				} catch (PlatePriceException e1) {
+					System.out.println(e1);
+				}
+			}
+
+			if(coloredPlates.getSelectedItem().toString().equals("Gold Plate")){
+				try {
+					Plate plate = new GoldPlate(roll, goldAmount.getValue());
+					publishPlateToListeners(plate);
+				} catch (PlatePriceException e1) {
+					e1.printStackTrace();
+				}
+			}
+		}
+
+		if(e.getSource() == sashimiButton){
+
+			if(coloredPlates.getSelectedItem().toString().equals("Red Plate")){
+
+				if(sashimiType.getSelectedItem().toString().equals("Crab")){
+					try {
+						Sashimi sashimi = new Sashimi(Sashimi.SashimiType.CRAB);
+						Plate plate = new RedPlate(sashimi);
+						publishPlateToListeners(plate);
+
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(sashimiType.getSelectedItem().toString().equals("Eel")){
+					try {
+						Sashimi sashimi = new Sashimi(Sashimi.SashimiType.EEL);
+						Plate plate = new RedPlate(sashimi);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(sashimiType.getSelectedItem().toString().equals("Salmon")){
+					try {
+						Sashimi sashimi = new Sashimi(Sashimi.SashimiType.SALMON);
+						Plate plate = new RedPlate(sashimi);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(sashimiType.getSelectedItem().toString().equals("Shrimp")){
+					try {
+						Sashimi sashimi = new Sashimi(Sashimi.SashimiType.SHRIMP);
+						Plate plate = new RedPlate(sashimi);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(sashimiType.getSelectedItem().toString().equals("Tuna")){
+					try {
+						Sashimi sashimi = new Sashimi(Sashimi.SashimiType.TUNA);
+						Plate plate = new RedPlate(sashimi);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+			}
+
+			if(coloredPlates.getSelectedItem().toString().equals("Green Plate")){
+
+				if(sashimiType.getSelectedItem().toString().equals("Crab")){
+					try {
+						Sashimi sashimi = new Sashimi(Sashimi.SashimiType.CRAB);
+						Plate plate = new GreenPlate(sashimi);
+						publishPlateToListeners(plate);
+
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(sashimiType.getSelectedItem().toString().equals("Eel")) {
+					try {
+						Sashimi sashimi = new Sashimi(Sashimi.SashimiType.EEL);
+						Plate plate = new GreenPlate(sashimi);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(sashimiType.getSelectedItem().toString().equals("Salmon")){
+					try {
+						Sashimi sashimi = new Sashimi(Sashimi.SashimiType.SALMON);
+						Plate plate = new GreenPlate(sashimi);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(sashimiType.getSelectedItem().toString().equals("Shrimp")){
+					try {
+						Sashimi sashimi = new Sashimi(Sashimi.SashimiType.SHRIMP);
+						Plate plate = new GreenPlate(sashimi);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(sashimiType.getSelectedItem().toString().equals("Tuna")){
+					try {
+						Sashimi sashimi = new Sashimi(Sashimi.SashimiType.TUNA);
+						Plate plate = new GreenPlate(sashimi);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+			}
+
+			if(coloredPlates.getSelectedItem().toString().equals("Blue Plate")){
+
+
+				if(sashimiType.getSelectedItem().toString().equals("Crab")){
+					try {
+						Sashimi sashimi = new Sashimi(Sashimi.SashimiType.CRAB);
+						Plate plate = new BluePlate(sashimi);
+						publishPlateToListeners(plate);
+
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(sashimiType.getSelectedItem().toString().equals("Eel")){
+					try {
+						Sashimi sashimi = new Sashimi(Sashimi.SashimiType.EEL);
+						Plate plate = new BluePlate(sashimi);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(sashimiType.getSelectedItem().toString().equals("Salmon")){
+					try {
+						Sashimi sashimi = new Sashimi(Sashimi.SashimiType.SALMON);
+						Plate plate = new BluePlate(sashimi);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(sashimiType.getSelectedItem().toString().equals("Shrimp")){
+					try {
+						Sashimi sashimi = new Sashimi(Sashimi.SashimiType.SHRIMP);
+						Plate plate = new BluePlate(sashimi);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(sashimiType.getSelectedItem().toString().equals("Tuna")){
+					try {
+						Sashimi sashimi = new Sashimi(Sashimi.SashimiType.TUNA);
+						Plate plate = new BluePlate(sashimi);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+			}
+		}
+
+		if(coloredPlates.getSelectedItem().toString().equals("Gold Plate")){
+
+			if(sashimiType.getSelectedItem().toString().equals("Crab")){
+				try {
+					Sashimi sashimi = new Sashimi(Sashimi.SashimiType.CRAB);
+					Plate plate = new GoldPlate(sashimi, goldAmount.getValue());
+					publishPlateToListeners(plate);
+
+				} catch (PlatePriceException e1) {
+					System.out.println(e1);
+				}
+			}
+
+			if(sashimiType.getSelectedItem().toString().equals("Eel")){
+				try {
+					Sashimi sashimi = new Sashimi(Sashimi.SashimiType.EEL);
+					Plate plate = new GoldPlate(sashimi, goldAmount.getValue());
+					publishPlateToListeners(plate);
+				} catch (PlatePriceException e1) {
+					System.out.println(e1);
+				}
+			}
+
+			if(sashimiType.getSelectedItem().toString().equals("Salmon")){
+				try {
+					Sashimi sashimi = new Sashimi(Sashimi.SashimiType.SALMON);
+					Plate plate = new GoldPlate(sashimi, goldAmount.getValue());
+					publishPlateToListeners(plate);
+				} catch (PlatePriceException e1) {
+					System.out.println(e1);
+				}
+			}
+
+			if(sashimiType.getSelectedItem().toString().equals("Shrimp")){
+				try {
+					Sashimi sashimi = new Sashimi(Sashimi.SashimiType.SHRIMP);
+					Plate plate = new GoldPlate(sashimi, goldAmount.getValue());
+					publishPlateToListeners(plate);
+				} catch (PlatePriceException e1) {
+					System.out.println(e1);
+				}
+			}
+
+			if(sashimiType.getSelectedItem().toString().equals("Tuna")){
+				try {
+					Sashimi sashimi = new Sashimi(Sashimi.SashimiType.TUNA);
+					Plate plate = new GoldPlate(sashimi, goldAmount.getValue());
+					publishPlateToListeners(plate);
+				} catch (PlatePriceException e1) {
+					System.out.println(e1);
+				}
+			}
+		}
+		
+		if(e.getSource() == nigiriButton){
+
+			if(coloredPlates.getSelectedItem().toString().equals("Red Plate")){
+
+				if(nigiriType.getSelectedItem().toString().equals("Crab")){
+					try {
+						Nigiri nigiri = new Nigiri(Nigiri.NigiriType.CRAB);
+						Plate plate = new RedPlate(nigiri);
+						publishPlateToListeners(plate);
+
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(nigiriType.getSelectedItem().toString().equals("Eel")){
+					try {
+						Nigiri nigiri = new Nigiri(Nigiri.NigiriType.EEL);
+						Plate plate = new RedPlate(nigiri);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(nigiriType.getSelectedItem().toString().equals("Salmon")){
+					try {
+						Nigiri nigiri = new Nigiri(Nigiri.NigiriType.SALMON);
+						Plate plate = new RedPlate(nigiri);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(nigiriType.getSelectedItem().toString().equals("Shrimp")){
+					try {
+						Nigiri nigiri = new Nigiri(Nigiri.NigiriType.SHRIMP);
+						Plate plate = new RedPlate(nigiri);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(nigiriType.getSelectedItem().toString().equals("Tuna")){
+					try {
+						Nigiri nigiri = new Nigiri(Nigiri.NigiriType.TUNA);
+						Plate plate = new RedPlate(nigiri);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+			}
+
+			if(coloredPlates.getSelectedItem().toString().equals("Green Plate")){
+
+				if(nigiriType.getSelectedItem().toString().equals("Crab")){
+					try {
+						Nigiri nigiri = new Nigiri(Nigiri.NigiriType.CRAB);
+						Plate plate = new GreenPlate(nigiri);
+						publishPlateToListeners(plate);
+
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(nigiriType.getSelectedItem().toString().equals("Eel")) {
+					try {
+						Nigiri nigiri = new Nigiri(Nigiri.NigiriType.EEL);
+						Plate plate = new GreenPlate(nigiri);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(nigiriType.getSelectedItem().toString().equals("Salmon")){
+					try {
+						Nigiri nigiri = new Nigiri(Nigiri.NigiriType.SALMON);
+						Plate plate = new GreenPlate(nigiri);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(nigiriType.getSelectedItem().toString().equals("Shrimp")){
+					try {
+						Nigiri nigiri = new Nigiri(Nigiri.NigiriType.SHRIMP);
+						Plate plate = new GreenPlate(nigiri);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(nigiriType.getSelectedItem().toString().equals("Tuna")){
+					try {
+						Nigiri nigiri = new Nigiri(Nigiri.NigiriType.TUNA);
+						Plate plate = new GreenPlate(nigiri);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+			}
+
+			if(coloredPlates.getSelectedItem().toString().equals("Blue Plate")){
+
+
+				if(nigiriType.getSelectedItem().toString().equals("Crab")){
+					try {
+						Nigiri nigiri = new Nigiri(Nigiri.NigiriType.CRAB);
+						Plate plate = new BluePlate(nigiri);
+						publishPlateToListeners(plate);
+
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(nigiriType.getSelectedItem().toString().equals("Eel")){
+					try {
+						Nigiri nigiri = new Nigiri(Nigiri.NigiriType.EEL);
+						Plate plate = new BluePlate(nigiri);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(nigiriType.getSelectedItem().toString().equals("Salmon")){
+					try {
+						Nigiri nigiri = new Nigiri(Nigiri.NigiriType.SALMON);
+						Plate plate = new BluePlate(nigiri);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(nigiriType.getSelectedItem().toString().equals("Shrimp")){
+					try {
+						Nigiri nigiri = new Nigiri(Nigiri.NigiriType.SHRIMP);
+						Plate plate = new BluePlate(nigiri);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+
+				if(nigiriType.getSelectedItem().toString().equals("Tuna")){
+					try {
+						Nigiri nigiri = new Nigiri(Nigiri.NigiriType.CRAB);
+						Plate plate = new BluePlate(sashimi);
+						publishPlateToListeners(plate);
+					} catch (PlatePriceException e1) {
+						System.out.println(e1);
+					}
+				}
+			}
+		}
+
+		if(coloredPlates.getSelectedItem().toString().equals("Gold Plate")){
+
+			if(nigiriType.getSelectedItem().toString().equals("Crab")){
+				try {
+					Sashimi sashimi = new Sashimi(Sashimi.SashimiType.CRAB);
+					Plate plate = new GoldPlate(sashimi, goldAmount.getValue());
+					publishPlateToListeners(plate);
+
+				} catch (PlatePriceException e1) {
+					System.out.println(e1);
+				}
+			}
+
+			if(nigiriType.getSelectedItem().toString().equals("Eel")){
+				try {
+					Sashimi sashimi = new Sashimi(Sashimi.SashimiType.EEL);
+					Plate plate = new GoldPlate(sashimi, goldAmount.getValue());
+					publishPlateToListeners(plate);
+				} catch (PlatePriceException e1) {
+					System.out.println(e1);
+				}
+			}
+
+			if(nigiriType.getSelectedItem().toString().equals("Salmon")){
+				try {
+					Sashimi sashimi = new Sashimi(Sashimi.SashimiType.SALMON);
+					Plate plate = new GoldPlate(sashimi, goldAmount.getValue());
+					publishPlateToListeners(plate);
+				} catch (PlatePriceException e1) {
+					System.out.println(e1);
+				}
+			}
+
+			if(nigiriType.getSelectedItem().toString().equals("Shrimp")){
+				try {
+					Sashimi sashimi = new Sashimi(Sashimi.SashimiType.SHRIMP);
+					Plate plate = new GoldPlate(sashimi, goldAmount.getValue());
+					publishPlateToListeners(plate);
+				} catch (PlatePriceException e1) {
+					System.out.println(e1);
+				}
+			}
+
+			if(nigiriType.getSelectedItem().toString().equals("Tuna")){
+				try {
+					Sashimi sashimi = new Sashimi(Sashimi.SashimiType.TUNA);
+					Plate plate = new GoldPlate(sashimi, goldAmount.getValue());
+					publishPlateToListeners(plate);
+				} catch (PlatePriceException e1) {
+					System.out.println(e1);
+				}
+			}
+		}
+	}
+}
+
+
+
