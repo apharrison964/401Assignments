@@ -26,10 +26,7 @@ public class A1Adept {
 		int categorySmallestitem = 0;
 		int categorySmallestprice = 0;
 		int categoryBiggestprice = 0;
-		//int priceLargest = 0;
-		//int priceSmallest = 0;
-		// String a1 = "end";
-		// String b1 = "end";
+	
 
 		while (true) {
 
