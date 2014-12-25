@@ -15,12 +15,9 @@ public class A1Jedi {
 
 		HashMap<String, Integer> quantity = new HashMap<String, Integer>();
 		HashMap<String, Double> cost = new HashMap<String, Double>();
-		// HashMap<String, Double> avgCost = new HashMap<String, Double>();
 
 		String name = s.next();
 		double price = 0;
-		// double c = 0;
-		// int q = 0;
 		double highestPrice = 0;
 		int highestCount = 0;
 		String highestCountname = null;
@@ -32,20 +29,16 @@ public class A1Jedi {
 
 			int inputQuantity = s.nextInt();
 			price = s.nextDouble() * inputQuantity;
-			// quantity.put(name, inputQuantity);
-			// cost.put(name, price);
 
 			if (quantity.containsKey(name)) {
 
 				inputQuantity += quantity.get(name);
-				// q = quantity.get(name) + inputQuantity;
 			}
 			quantity.put(name, inputQuantity);
 
 			if (cost.containsKey(name)) {
 
 				price += cost.get(name);
-				// c = cost.get(name) + price;
 			}
 			cost.put(name, price);
 			name = s.next();
