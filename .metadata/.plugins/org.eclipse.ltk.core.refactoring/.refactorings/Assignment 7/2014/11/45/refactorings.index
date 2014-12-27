@@ -1,0 +1,32 @@
+1415027139138	Copy package
+1415027151162	Move compilation unit
+1415027155205	Move compilation unit
+1415027159321	Delete element
+1415300296180	Delete element
+1415300821704	Rename type 'Plate'
+1415302466511	Delete element
+1415304223291	Rename local variable 'plate_at_position'
+1415304237081	Rename method 'correct_position'
+1415304251001	Rename local variable 'last_plate'
+1415311616814	Rename field 'ageCount'
+1415312708795	Rename method 'age'
+1415313104255	Copy package
+1415384836311	Move compilation unit
+1415384841348	Delete element
+1415384918941	Delete element
+1415385008205	Delete element
+1415394914872	Move folder
+1415394942708	Delete element
+1415394967280	Rename package 'a7adept.a7adept'
+1415394973517	Delete element
+1415394975960	Move folder
+1415394987819	Delete element
+1415394990174	Move folder
+1415394997427	Delete element
+1415395000294	Move folder
+1415395005822	Delete element
+1415395008536	Move folder
+1415395012302	Delete element
+1415397397294	Delete element
+1415399355008	Rename local variable 's'
+1415401214178	Rename local variable 'curentCount'
