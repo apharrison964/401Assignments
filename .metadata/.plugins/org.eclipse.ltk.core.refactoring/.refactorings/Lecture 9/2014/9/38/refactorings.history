@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Move element &apos;IngredientImpl.java&apos; to &apos;Assignment 3/src/a3novice&apos;&#x0D;&#x0A;- Original project: &apos;Lecture 9&apos;&#x0D;&#x0A;- Destination element: &apos;Assignment 3/src/a3novice&apos;&#x0D;&#x0A;- Original element: &apos;lec09.ex8.v6.IngredientImpl.java&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="=Assignment 3/src&lt;a3novice" element1="/src&lt;lec09.ex8.v6{IngredientImpl.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1410986038469" units="1" version="1.0"/>
-</session>
